@@ -3,6 +3,7 @@ from telebot import types
 from RSHB import Parcing
 import requests
 from bs4 import BeautifulSoup
+from transliterate import translit
 bot = telebot.TeleBot('1214038664:AAGou_lvPbWDGLbbPqKMOfJ_Za-7xPRiL5I')
 loans = Parcing.main()
 buttons = []
@@ -45,9 +46,8 @@ def loan_info(message):
 
 def application_filing(message):
     markup = types.ReplyKeyboardMarkup(True)
-    markup.add("Да", "Нет")
-    msg = bot.send_message(message.chat.id, 'Хотите ли вы подать заявку на данный кредит?', reply_markup=markup)
-
+    markup.add(f"Да, оформить кредит {message.text}", f"Нет, перейти к просмотру других возможностей")
+    bot.send_message(message.chat.id, 'Хотите ли вы подать заявку на данный кредит?', reply_markup=markup)
 
 
 bot.polling(none_stop=True, interval=0)
